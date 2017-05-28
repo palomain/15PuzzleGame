@@ -2,26 +2,41 @@
  * Created by cpalomino on 5/25/2017.
  */
 const webpack = require('webpack');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const path = require('path');
+
+const extractCSS = new ExtractTextPlugin('style.css');
+
 /**
  * Created by carhe on 5/20/2017.
  */
 module.exports = {
     devtool: 'source-map',
     entry: {
-        filename: './src/app.js'
+        filename: './src/app.jsx'
     },
     output: {
-        filename: '_build/bundle.js'
+        path : path.resolve(__dirname, 'build'),
+        filename : 'bundle.js',
+        publicPath : 'build/'
     },
     module: {
-        loaders: [
+
+        rules : [
+            {
+                test: /\.css$/,
+                use: extractCSS.extract([ 'css-loader'])
+            },
             {
                 test: /\.js$/,
                 exclude: /node_modules/,
-                loader: 'babel-loader',
-                query: {
-                    presets: ['es2015-native-modules']
-                }
+                use: 'babel-loader'
+
+            },
+            {
+                test: /\.jsx$/,
+                exclude: /node_modules/,
+                use: 'babel-loader'
             }
         ]
     },
@@ -34,6 +49,7 @@ module.exports = {
                 comments: false
             },
             sourceMap: true
-        })
+        }),
+        extractCSS
     ]
 };

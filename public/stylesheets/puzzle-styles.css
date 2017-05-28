@@ -1,0 +1,47 @@
+
+.piece{
+    box-sizing:border-box;
+
+    /* Firefox still requires the -moz prefix */
+    -moz-box-sizing:border-box;
+
+    background-color:brown;
+    border-width: 2px ;
+    border-style : solid;
+    border-color:black;
+
+    text-align:center;
+    vertical-align:middle;
+    position : absolute;
+    padding-top: 7px;
+    transition: transform 0.1s;
+    width:50px;
+    height:50px;
+}
+
+.movable{
+    cursor : pointer;
+}
+
+.movable:hover{
+    filter : brightness(80%);
+}
+
+.move-down{
+    transform: translateY(-50px)
+}
+
+.move-up{
+    transform: translateY(50px)
+}
+
+.move-right{
+    transform: translateX(-50px)
+}
+
+.move-left{
+    transform: translateX(50px)
+}
+
+
+

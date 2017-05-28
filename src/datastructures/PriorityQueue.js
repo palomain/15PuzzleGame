@@ -66,4 +66,8 @@ export default class PriorityQueue{
         this.heap = []
     }
 
+    isEmpty(){
+        return this.heap.length == 0;
+    }
+
 }

@@ -2,7 +2,7 @@
  * Created by cpalomino on 5/25/2017.
  */
 
-import PuzzleState, {manhattan} from './PuzzleState';
+import PuzzleState from './PuzzleState';
 
 const GAME_PROTOTYPE =[
      [1, 2, 3, 4],

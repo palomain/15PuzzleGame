@@ -15,7 +15,7 @@ const POSITIONS = _.range(1, 16).map(val=>[~~((val-1)/4), (val-1)%4]);
 export default class PuzzleState{
 
     constructor(state, empty, parent, moveId){
-        this.manhattan = manhattan(state);
+        this.manhattan = manhattanLinear(state);
         this.empty = empty;
         this.state = state;
         this.moveId = moveId;
@@ -64,17 +64,33 @@ export default class PuzzleState{
     }
 }
 
-export const manhattan = function(state){
+export const manhattanLinear = function(state){
     let count = 0;
     state.forEach((row, i)=>{
         row.forEach((val, j)=> {
             if(val){
                 const pos = POSITIONS[val-1];
-                count += Math.abs(i-pos[0]) +  Math.abs(j-pos[1]);
+
+                const posVal = state[pos[0]][pos[1]];
+
+                let offset = Math.abs(i-pos[0]) +  Math.abs(j-pos[1]) ;
+
+                if(posVal && offset) {
+                    const pos2 = POSITIONS[posVal - 1];
+
+                    if((pos[0] == i && pos2[0] == j && pos2[1] == j) ||
+                        (pos[1] == j && pos2[1] == j && pos2[0] == i )){
+                        console.log("linear conflict found");
+                        count++;
+                    }
+                }
+                count += offset;
             }
         } );
     });
 
     return count;
 }
+
+
 

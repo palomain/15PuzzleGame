@@ -3,7 +3,7 @@ import PuzzleBoard from './PuzzleBoard.jsx';
 import PuzzleBuilder from '../model/PuzzleBuilder';
 import PuzzleSolver from '../model/PuzzleSolver';
 
-const builder = new PuzzleBuilder(100);
+const builder = new PuzzleBuilder(500);
 const solver = new PuzzleSolver();
 
 export default class App extends Component{
@@ -21,6 +21,7 @@ export default class App extends Component{
         const states = solver.solvePuzzleAStar(game);
 
         states.shift();
+        console.log("A total of "  + states.length + " moves");
 
         this.refs.board.runMoves( states.map(state => state.moveId) );
 

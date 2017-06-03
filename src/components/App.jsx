@@ -37,7 +37,7 @@ export default class App extends Component{
             <div>
                 <PuzzleBoard ref="board" game={self.state.game}/>
                 <br/>
-                <div style={{textAlign:"center"}}>
+                <div className="buttons" >
                     <button onClick={self.solve.bind(self)}>Solve</button>
                     <button onClick={self.startNewGame.bind(self)}>Start new Game</button>
                 </div>

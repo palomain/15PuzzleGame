@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import '../../public/stylesheets/puzzle-styles.css';
 import {MOVES} from '../model/PuzzleState';
 
+const OFFSET = 2;
 
 const $ = require('jquery');
 
@@ -72,8 +73,8 @@ export default class PuzzlePiece extends  Component {
                  className={"piece " + (canMove ? "movable" : "")}
                  style={{
 
-                     top : y + "px",
-                     left : x + "px"
+                     top : (OFFSET + y) + "px",
+                     left : (OFFSET + x) + "px"
                  }}>
                 <span style={{fontSize:"30px"}}>{num !== null ? num : ""}</span>
             </div>

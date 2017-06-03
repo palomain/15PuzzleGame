@@ -17,8 +17,7 @@ module.exports = {
     },
     output: {
         path : path.resolve(__dirname, 'build'),
-        filename : 'bundle.js',
-        publicPath : 'build/'
+        filename : 'bundle.js'
     },
     module: {
 
@@ -37,6 +36,17 @@ module.exports = {
                 test: /\.jsx$/,
                 exclude: /node_modules/,
                 use: 'babel-loader'
+            },
+            {
+                test: /\.(jpe?g|png|gif|svg)$/,
+                use: [
+                    {
+                        loader: 'url-loader',
+                        options: {limit: 40000}
+                    },
+                    'image-webpack-loader'
+
+                ]
             }
         ]
     },

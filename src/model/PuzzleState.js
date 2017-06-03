@@ -54,6 +54,17 @@ export default class PuzzleState{
         return this.manhattan - otherState.manhattan;
     }
 
+    isFinalState(){
+        let isFinal = true;
+        let count = 1;
+        this.state.forEach(row=>row.forEach(val=>{
+            isFinal &=  (val === null || val == count);
+            count++;
+        }));
+
+        return isFinal;
+    }
+
     toString(){
         let str = "";
         this.state.forEach(row=>{

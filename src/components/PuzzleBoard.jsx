@@ -9,7 +9,8 @@ export default class PuzzleBoard extends Component{
     constructor(props){
         super(props);
         this.state = {
-            game : props.game
+            game : props.game,
+            moves : 0
         };
     }
 
@@ -34,17 +35,24 @@ export default class PuzzleBoard extends Component{
         piece.move(moveKey, function(){
             console.log("Rendering!");
             if(!dontRender) {
-                self.setState({game: newGame});
+                self.setState({game: newGame, moves : self.state.moves+1}, self.verifyFinalState.bind(self));
             }
         });
     }
+
+    verifyFinalState() {
+        if(this.state.game.isFinalState()){
+            alert("You have won the game!");
+        }
+    }
+
 
     getGameState(){
         return this.state.game;
     }
 
     setNewGame(game){
-        this.setState({game : game});
+        this.setState({game : game, moves:0});
     }
 
     runMoves(movesIds){
@@ -66,7 +74,8 @@ export default class PuzzleBoard extends Component{
             const newGame = game.makeMove(moveId);
             board.refs["p"+pnum].move(moveId, ()=>{
                 self.setState({
-                    game : newGame
+                    game : newGame,
+                    moves : self.state.moves+1
                 }, ()=> simulation(i+1, board, newGame))
 
             });
@@ -90,10 +99,13 @@ export default class PuzzleBoard extends Component{
 
     render(){
         let state = this.state.game.state;
+        let moves = this.state.moves;
         let self = this;
 
         return (
-            <div>
+            <div className="board">
+                <span className="title">15 Puzzle Game</span>
+                <div className="piecesContainer">
                 {
                     state.map((row, i)=>{
                         return row.map((val, j)=>{
@@ -101,6 +113,10 @@ export default class PuzzleBoard extends Component{
                         })
                     })
                 }
+                </div>
+                <div className="moves" >
+                    <span>Moves:{self.state.moves}</span>
+                </div>
             </div>
         )
     }

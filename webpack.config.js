@@ -1,11 +1,19 @@
 /**
  * Created by cpalomino on 5/25/2017.
  */
-const webpack = require('webpack');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const path = require('path');
+let webpack = require('webpack');
+let ExtractTextPlugin = require('extract-text-webpack-plugin');
+let path = require('path');
+let HtmlWebpackPlugin  = require('html-webpack-plugin');
+let extractCSS = new ExtractTextPlugin('style.css');
 
-const extractCSS = new ExtractTextPlugin('style.css');
+//Here I define the dependencies that I want to bundle into vendor.js
+const VENDOR_LIBS = [
+    "jquery",
+    "lodash",
+    "react",
+    "react-dom"
+];
 
 /**
  * Created by carhe on 5/20/2017.
@@ -13,11 +21,12 @@ const extractCSS = new ExtractTextPlugin('style.css');
 module.exports = {
     devtool: 'source-map',
     entry: {
-        filename: './src/app.jsx'
+        bundle: './src/app.jsx',
+
     },
     output: {
-        path : path.resolve(__dirname, 'build'),
-        filename : 'bundle.js'
+        path : path.join(__dirname, 'dist'),
+        filename: '[name].[chunkhash].js'
     },
     module: {
 
@@ -45,7 +54,6 @@ module.exports = {
                         options: {limit: 40000}
                     },
                     'image-webpack-loader'
-
                 ]
             }
         ]
@@ -60,6 +68,9 @@ module.exports = {
             },
             sourceMap: true
         }),
+        new HtmlWebpackPlugin(({
+            template : 'src/index.html'
+        })),
         extractCSS
     ]
 };

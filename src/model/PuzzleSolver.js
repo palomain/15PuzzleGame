@@ -1,5 +1,6 @@
 import PriorityQueue from '../datastructures/PriorityQueue';
-import {MOVES} from '../model/PuzzleState';
+import {MOVES, MANHATTAN_LINEAR_RANGE, MANHATTAN_LINEAR, POSITIONS} from '../model/PuzzleState';
+import _ from 'lodash';
 
 const MAX_DEPTH = 80;
 
@@ -20,7 +21,7 @@ export default class PuzzleSolver {
         while(!pq.isEmpty()){
            game = pq.remove();
 
-            if(game.manhattan == 0){
+            if(game.cost == 0){
                 break;
             }
 
@@ -52,7 +53,7 @@ export default class PuzzleSolver {
     solvePuzzleIDAStar(game){
         game.childStates = null;
         game.parent = null;
-        let limit = game.manhattan;
+        let limit = game.cost;
 
         let path = null;
 
@@ -77,11 +78,11 @@ function idaStar(state, limit, currDepth, covered){
         return;
     }
 
-    //console.log("State is " + stateStr + " and manhattan is " + state.manhattan + " and depth is " + currDepth + " and limit is " + limit );
+    //console.log("State is " + stateStr + " and cost is " + state.cost + " and depth is " + currDepth + " and limit is " + limit );
 
     covered[stateStr] = true;
 
-    if(state.manhattan == 0){
+    if(state.cost == 0){
         return {
             path : [],
             limit : 0,
@@ -89,10 +90,10 @@ function idaStar(state, limit, currDepth, covered){
         };
     }
 
-    if(state.manhattan > limit || currDepth == MAX_DEPTH){
+    if(state.cost > limit || currDepth == MAX_DEPTH){
         return {
             path : null,
-            limit : state.manhattan,
+            limit : state.cost,
             depthReached : currDepth == MAX_DEPTH
         };
     }
@@ -106,7 +107,7 @@ function idaStar(state, limit, currDepth, covered){
             childStates.push(childState);
         }
 
-        childStates.sort((a,b)=>a.manhattan-b.manhattan);
+        childStates.sort((a,b)=>a.cost-b.cost);
 
         state.childStates = childStates;
     }

@@ -55,14 +55,7 @@ export default class PuzzleState{
     }
 
     isFinalState(){
-        let isFinal = true;
-        let count = 1;
-        this.state.forEach(row=>row.forEach(val=>{
-            isFinal &=  (val === null || val == count);
-            count++;
-        }));
-
-        return isFinal;
+        return this.manhattan == 0;
     }
 
     toString(){
@@ -91,7 +84,7 @@ export const manhattanLinear = function(state){
 
                     if((pos[0] == i && pos2[0] == j && pos2[1] == j) ||
                         (pos[1] == j && pos2[1] == j && pos2[0] == i )){
-                        console.log("linear conflict found");
+
                         count++;
                     }
                 }
